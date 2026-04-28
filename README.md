@@ -199,3 +199,36 @@ pause()
 - gpiozero의 Button은 pull_up=True일 때
   스위치를 눌러 값이 0이 되어도 이것을 '눌림'으로 처리해준다.
   그래서 사용자는 편하게 button.when_pressed를 사용할 수 있다.
+
+
+  ### 버튼을 이용하여 led켜고 끄기
+  - 나중에 코드 넣어라
+
+  ### 컨버터 사용하기
+  - Work/py폴더에서 가상환경을 만든다.
+  - `ls /dev/i2c*` 을 실행하면 /dev/i2c-1이 있어야한다.
+  - `sudo apt install i2c-tools` 를 한다.
+  - `i2cdetect -y 1`을 입력하면 48이 나온다.
+
+```py 
+# PCF8591.py
+
+ import smbus
+ import time
+ 
+ bus = smbus.SMBus(1)
+ ADDR = 0x48
+ 
+ def read_cds():
+    bus.write_byte(ADDR, 0x41)  # AIN1
+    bus.read_byte(ADDR)         # dummy
+    return bus.read_byte(ADDR)
+
+try:
+    while True:
+       val = read_cds()
+       print("CDS:", val)
+       time.sleep(0.5)
+except KeyboardInterrupt:
+    print("종료")
+```
