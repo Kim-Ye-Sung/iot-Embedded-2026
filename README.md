@@ -266,3 +266,15 @@ except KeyboardInterrupt:
 3. 플라스크 서버로 led제어하기
 
 4. 플라스크 서버로 led, 부저, 초음파 센서를 작동하고 그에따른 상태를 사이트 화면에 표시함
+
+
+# 2026-05-07
+- qt를 사용하요 ui 제작
+## qt설치 과정
+1. 라즈베리파이의 터미널에서 `sudo apt install build-essential cmake gdb`를 입력하여 설치한다.
+2. sudo apt install -y qt6-base-dev qt6-base-dev-tools
+3. sudo apt install -y qt6-tools-dev qt6-tools-dev-tools qml6-module-qtquick qml6-module-qtquick-controls
+4. sudo apt install -y qtcreator
+5. qmake6 --version
+6. qt앱을 확인하려면 vnc viewer에서 왼쪽 상단의 산딸기 마크에서 programming 부분을 보면 qt가 있다.
+7. qt 사용하는건 프로젝트 해봤으니 알거다.
