@@ -1,0 +1,9 @@
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/test.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/install.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/install/local.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/test_autogen_timestamp_deps.dir
+/home/rpi/Work/qt/test/build/Desktop-Debug/CMakeFiles/test_autogen.dir

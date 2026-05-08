@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="refresh" content="1"> <!-- 1초마다 사이트 화면 갱신-->
+   <title>LED Control</title>
+
+   <style>
+      form {
+         display: inline-block;
+         margin-right: 20px;
+      }
+
+      .led-row {
+         margin-bottom: 30px;
+      }
+   </style>
+</head>
+<body>
+   <h1>Flask LED 제어</h1>
+   
+   <p>현재 LED 상태 : <b>{{LED_state}}</b></p>
+   <br>
+   <p>현재 부저 상태 : <b>{{Buzzer_state}}</b></p>
+   <br>
+   <p>초음파 센서 측정 : <b>{{sonicValue}}</b></p>
+   <br>
+   <div class="led-row">
+      <form action="/led/blue/on" method="post">
+         <button type="submit">Blue ON</button>
+      </form>
+   </div>
+
+   <div class="led-row">
+      <form action="/led/green/on" method="post">
+         <button type="submit">Green ON</button>
+      </form>
+
+      <form action="/led/off" method="post">
+         <button type="submit">LED OFF</button>
+      </form>
+   </div>
+
+   <div class="led-row">
+      <form action="/led/red/on" method="post">
+         <button type="submit">Red ON</button>
+      </form>
+   </div>
+   
+   <br><br>
+   
+   <div class = "buzzer_con">
+      <form action = "/buzzer/on" method = "post">
+         <button type = "submit">Buzzer On</button>
+      </form>
+      
+      <form action = "/buzzer/off" method = "post">
+         <button type = "submit">Buzzer Off</button>
+      </form>
+   </div>
+</body>
+</html>

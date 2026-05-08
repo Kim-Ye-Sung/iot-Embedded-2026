@@ -1,0 +1,9 @@
+# ninja log v6
+1	733	1778114890639905448	test_autogen/timestamp	6370103e7fd4b030
+1	733	1778114890639905448	test_autogen/mocs_compilation.cpp	6370103e7fd4b030
+1	733	1778114890639905448	/home/rpi/Work/qt/test/build/Desktop-Debug/test_autogen/timestamp	6370103e7fd4b030
+1	733	1778114890639905448	/home/rpi/Work/qt/test/build/Desktop-Debug/test_autogen/mocs_compilation.cpp	6370103e7fd4b030
+733	3225	1778114890655906786	CMakeFiles/test.dir/test_autogen/mocs_compilation.cpp.o	e748e9d768d4de01
+733	3309	1778114890655906786	CMakeFiles/test.dir/main.cpp.o	c3019a96eaf58670
+733	3324	1778114890655906786	CMakeFiles/test.dir/mainwindow.cpp.o	9f7fd0e3b7631f13
+3324	3947	1778114893248119444	test	d1bb0b9110467e81
