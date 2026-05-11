@@ -278,3 +278,30 @@ except KeyboardInterrupt:
 5. qmake6 --version
 6. qt앱을 확인하려면 vnc viewer에서 왼쪽 상단의 산딸기 마크에서 programming 부분을 보면 qt가 있다.
 7. qt 사용하는건 프로젝트 해봤으니 알거다.
+
+
+
+# 2026-05-11
+- ros란 운영체제인것처럼 생각이 들지만 사실 운영체제인척하는 일종의 라이브러리이다?
+
+- 일단 sd카드를 뽑아서 초기화하고 ros를 설치했다. 
+- 우분투24.04.4 LTS를 설치한다.
+
+- 사용자 : rpi
+- 컴퓨터이름: rospi
+- 비밀번호: ubuntu
+
+- 라즈베리파이(ros2)와 vnc 연결을 위해 해줘야할것
+1. cd Downloads
+2. wget https://downloads.realvnc.com/download/file/vnc.files/VNC-Server-7.16.0-Linux-ARM64.deb
+3. chmod u+x VNC-Server-7.16.0-Linux-ARM64.deb
+4. sudo apt install ./VNC-Server-7.16.0-Linux-ARM64.deb
+
+[참고 사이트](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
+
+
+- 마찬가지로 가상환경을 실행시켜야한다.
+- source .venv/bin/activate
+
+## 주피터 노트북?
+- jupyter lab으로 서버를 실행한다.
