@@ -281,6 +281,7 @@ except KeyboardInterrupt:
 
 
 
+### 여기서부터 ros 수업 시작. 위에까지는 임베디드
 # 2026-05-11
 - ros란 운영체제인것처럼 생각이 들지만 사실 운영체제인척하는 일종의 라이브러리이다?
 
@@ -467,3 +468,32 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
   11. source install/setup.bash  // 다시 환경 적용
   12. ros2 run my_pkg my_node   // 노드를 실행?
   13. 
+
+
+
+
+  # 2026-05-13
+  다시 위의 과정을 한번 반복해봤다.
+  그리고 ros2_ws/src/my_pkg/my_pkg안에  my_subscriber.py라는 파일을 만들어서 코드를 작성했다.
+
+  1. ros2_ws/src/my_pkg/setup.py 라는 파일의 entry_points에는 내가 실행하고자 하는것을 등록시켜줘야한다?
+    - 여기서는 'my_subscriber = my_pkg.my_subscriber:main'을 등록시켜줬다.
+  2. ros2_ws 위치에서 colcon build를 실행한다.
+  3. source ~/.bashrc 를 한다
+  4. source install/setup.bash 를 한다
+  5. ros2 run turtlesim turtlesim_node 로 거북이를 실행한다.
+  6. ros2 run my_pkg my_subscriber 를 실행한다. 그러면 거북이의 위치가 나온다.
+  
+  7. ros2_ws/src/my_pkg/my_pkg안에 my_publisher.py 라는 파일을 만들어서 코드를 작성했다.
+  8. 마찬가지로 ros2_ws/src/my_pkg/setup.py 라는 파일의 entry_points에는 내가 실행하고자 하는것을 등록시켜줘야한다
+    - 여기서는 'my_publisher = my_pkg.my_publisher:main'을 등록시켜줬다.
+  9. 터미널창에서 publisher를 실행할 곳과 subscriber를 실행할 곳을 나누고, 각각 source install/setup.bash 를 실행한다.
+  10. ros2 run my_pkg my_publisher와 ros2 run my_pkg my_subscriber를 실행한다.
+  11. 다른 터미널 창에서 ros2 run turtlesim turtlesim_node 로 거북이를 실행한다.
+
+
+
+
+  - 아두이노 받았다
+  - 아두이노 ide를 설치함
+  -
