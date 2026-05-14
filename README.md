@@ -297,7 +297,7 @@ except KeyboardInterrupt:
 2. wget https://downloads.realvnc.com/download/file/vnc.files/VNC-Server-7.16.0-Linux-ARM64.deb
 3. chmod u+x VNC-Server-7.16.0-Linux-ARM64.deb
 4. sudo apt install ./VNC-Server-7.16.0-Linux-ARM64.deb
-5. sudo nanorc
+5. sudo nanorc  // autoindent, linenumbers, tabsize 조절할것
 6. sudo nano /etc/gdm3/custom.conf      // 여기서 "WaylandEnable = false"라는 곳을 주석 해제한다.
 7. sudo apt install xserver-xorg-video-dummy xinit
 8. sudo nano /etc/X11/xorg.conf  // 완전히 비어있는 파일이 맞다. 여기에 아래와 같이 입력한다.
@@ -419,9 +419,9 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
 
 - 설치가 다 되면 사용이 가능한게 아니다. ros2를 사용하기 위해서는 다음과 같은 코드로 가상환경처럼 환경을 불러와야한다.
   - source /opt/ros/jazzy/setup.bash
-- 그런데 매번 컴퓨터를 켤때마다 새롭게 위의 코드를 입력해줘야하는것은 귀찮다. 따라서 다음과 같은 코드로 설정해준다.
-  - echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
-  - 또는 nano ~/.bashrc 로 들어가서 맨아랫줄에 source /opt/ros/jazzy/setup.bash를 직접 입력해도 된다. 그런데 위의 코드를 하는게 더 편하다.
+- `그런데 매번 컴퓨터를 켤때마다 새롭게 위의 코드를 입력해줘야하는것은 귀찮다. 따라서 다음과 같은 코드로 설정해준다.`
+  - `echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc`
+  - `또는 nano ~/.bashrc 로 들어가서 맨아랫줄에 source /opt/ros/jazzy/setup.bash를 직접 입력해도 된다.` 그런데 위의 코드를 하는게 더 편하다.
   - 실제로 코드를 실행하고나서 nano ~/.bashrc로 들어가면 확인가능하다.
 
 - 거북이 한번 사용해보기
@@ -454,7 +454,7 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
   -
 
 
-  # 뭘 하고 있는건지 모르겠음. 서버를 켜기 위한 작업같은데?
+  # 뭘 하고 있는건지 모르겠음. 서버를 켜기 위한 작업같은데?(vmware에서 한다.)
   1. mkdir -p ros2_ws/src      // 새롭게 작업할 폴더를 만듦
   2. cd ros2_ws   // 작업 폴더로 이동
   3. colcon build   // 뭔지 모르겠음
@@ -473,7 +473,7 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
 
 
   # 2026-05-13
-  다시 위의 과정을 한번 반복해봤다.
+  vmware에서 다시 위의 과정을 한번 반복해봤다.
   그리고 ros2_ws/src/my_pkg/my_pkg안에  my_subscriber.py라는 파일을 만들어서 코드를 작성했다.
 
   1. ros2_ws/src/my_pkg/setup.py 라는 파일의 entry_points에는 내가 실행하고자 하는것을 등록시켜줘야한다?
@@ -496,4 +496,239 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
 
   - 아두이노 받았다
   - 아두이노 ide를 설치함
-  `LED제어 코드 다시 한번 짜라. 저장안했다`
+  - [첫 LED 제어 코드](./260513/Arduino_LED/Arduino_LED.ino)
+
+
+
+
+
+#   2026-05-14
+- 우리가 사용하는 led처럼 +하나를 공통으로 사용하는거면 `애노드 타입`이다.
+- 애노드 타입일때는 +하나를 꽂고 나머지 핀에는 사용할 핀번호 핀을 꽂는다.
+- 그런데 핀 번호에서는 -를 줘야만 +에서 -로 흐르는 전기 작용에 의해 전기가 흐른다.
+- 따라서 LOW로 0V를 줘야 전기가 흘러 오히려 LED가 켜지고, HIGH를 해야 LED가 꺼진다.
+
+## 일단 LED제어 코드를 만들고, 그것을 ROS2에서 구동 시키려고한다.
+  - [코드](./260514/Arduino_LED_Control/Arduino_LED_Control.ino)
+
+  - 그리고 라즈베리파이의 ROS2에서는 다음과 같이 코드를 입력한다.
+  - mkdir -p ~/ros2_ws/src
+  - cd ~/ros2_ws/src
+  - ros2 pkg create arduino_led_bridge --build-type ament_python --dependencies rclpy std_msgs  // 패키지 생성. 이러면 ls명령어로 보면 생성이 된걸 확인 가능하다.
+  - sudo apt update
+  - sudo apt install python3-serial    
+  - python3 -c "import serial; print(serial.__version__)"
+  - cd arduino_led_bridge/arduino_led_bridge      // ros2_ws/src/arduino_led_bridge/arduino_led_bridge 로 이동한다.
+  - nano led_serial_subscriber.py         // 파이썬 코드 생성하고 작성
+  - sudo bash -c "source /opt/ros/jazzy/setup.bash && python3 led_serial_subscriber.py"  // 일단 코드가 제대로 작성됐는지 확인하려고 하는데, python led_serial_subscriber.py 라고만 하면 제대로 뭔가 안되더라. 그래서 gpt한테 물어보니 이렇게 하면 된다고 해서 해서 됐다.
+  - 위의 과정이 확인되고 나면 아래와 같이 계속 실행한다.
+  - cd ..   // ros2_ws/src/arduino_led_bridge 로 이동한다.
+  - nano setup.py 에서 아래줄을 찾아가서 다음과 같이 입력한다.
+    - entry_points={
+         'console_scripts': [
+             'led_serial_subscriber = arduino_led_bridge.led_serial_subscribe>
+         ],
+      },
+
+  - cd ros2_ws   // ros2_ws로 이동
+  - colcon build
+  - `source install/setup.bash` // 앞으론 이걸 자주 실행하도록 하자.
+  - ls /dev/ttyACM*  // 혹은 ls /dev/ttyUSB* 를 입력한다. 무언가가 제대로 출력되는지 확인한다.
+  - ls -l /dev/ttyACM0  // 이것도 제대로 출력되는지 확인한다.
+  - sudo usermod -a -G dialout $USER  // 권한 설정을 해준다.
+  - newgrp dialout  // 이것까지 해줘야 완벽한 권한 설정 완료가 되고, 작성한 코드를 실행할 수 있다. 아니면 오류가 난다.
+  - groups  // 이건 하라고 하니까 일단 한다. 무슨 코드인지 모르겠다.
+  - `ros2 run arduino_led_bridge led_serial_subscriber // 작성한 코드 실행한다. 만약 이게 찾지도 못한다면 source install/setup.bash를 안해줘서이다. 반드시 해주자. 라즈베리파이 껐다 켤때마다 source install/setup.bash과 sudo usermod -a -G dialout $USER, newgrp dialout를 해줘야 한다.`
+  - 위의 코드가 실행되고 있는 상태로 `다른 터미널창`에서 아래와 같이 입력한다.  
+    - ros2 topic pub /led_cmd std_msgs/msg/String "{data: 'on'}" --once  // 이러면 led가 켜진다.
+    - ros2 topic pub /led_cmd std_msgs/msg/String "{data: 'off'}" --once  // 이러면 led가 꺼진다.
+
+
+
+## 라즈베리파이에서 바로 아두이노 ide 사용하기
+- sudo apt install arduino   // 아두이노 ide 설치
+
+## 라즈베리파이에서 아두이노와 연결하여 구독 형태로 등록하여 led3색 켜기(`금일 위의 코드들을 참고하기`)
+1. ros2_ws/src에led_practice_kys 패키징 생성
+2. ros2_ws/src/led_practice_kys/led_practice_kys 에 led_subscriber_kys.py 파일 생성하여 다음과 같이 작성하기
+   ```py
+    import rclpy
+    from rclpy.node import Node
+    from std_msgs.msg import String
+    import serial
+    import time
+
+
+    class LedSerialSubscriber(Node):
+        def __init__(self):
+            super().__init__('led_serial_subscriber')
+
+            # 아두이노가 연결된 시리얼 포트
+            port = '/dev/ttyACM0'
+            baudrate = 115200
+
+            try:
+                self.ser = serial.Serial(port, baudrate, timeout=1)
+                time.sleep(2)  # 아두이노가 시리얼 연결 후 리셋되는 시간 대기
+                self.get_logger().info(f'Serial connected: {port}')
+
+            except Exception as e:
+                self.get_logger().error(f'Failed to open serial port: {e}')
+                self.ser = None
+
+            # /led_cmd 토픽 구독
+            self.subscription = self.create_subscription(
+                String,
+                'led_cmd',
+                self.listener_callback,
+                10
+            )
+
+        def listener_callback(self, msg):
+            if self.ser is None:
+                self.get_logger().error('Serial not available')
+                return
+
+            # 사용자가 보낸 문자열을 소문자로 정리
+            data = msg.data.strip().lower()
+
+            if data == 'r':
+                self.ser.write(b'R\n')
+                self.get_logger().info('Sent: R')
+
+            elif data == 'b':
+                self.ser.write(b'B\n')
+                self.get_logger().info('Sent: B')
+
+            elif data == 'g':
+                self.ser.write(b'G\n')
+                self.get_logger().info('Sent: G')
+
+            elif data == 'off':
+                self.ser.write(b'OFF\n')
+                self.get_logger().info('Sent: OFF')
+
+            else:
+                self.get_logger().warn(f'Unknown command: {msg.data}')
+
+
+    def main(args=None):
+        rclpy.init(args=args)
+
+        node = LedSerialSubscriber()
+
+        try:
+            rclpy.spin(node)
+
+        except KeyboardInterrupt:
+            pass
+
+        if node.ser is not None:
+            node.ser.close()
+
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+    if __name__ == '__main__':
+        main()
+   ```
+3. ros2_ws/src/led_practice_kys 위치의 setup.py 의 마지막 부분에 다음으로 수정하기 
+```py
+entry_points={
+    'console_scripts': [
+      'led_serial_subscriber = led_practice_kys.led_subscriber_kys:main'
+     ],
+```
+4. 3색 led 관련 아두이노 코드 작성
+```c
+String cmd = "";
+const int R_PIN = 8;
+const int G_PIN = 9;
+const int B_PIN = 10;
+
+void setup() {
+  pinMode(R_PIN, OUTPUT);
+  pinMode(G_PIN, OUTPUT);
+  pinMode(B_PIN, OUTPUT);
+
+  digitalWrite(R_PIN, HIGH);
+  digitalWrite(G_PIN, HIGH);
+  digitalWrite(B_PIN, HIGH);  
+  Serial.begin(115200);
+}
+
+void loop() {
+  while(Serial.available() >0)
+  {
+    cmd = Serial.readStringUntil('\n');
+    if(cmd == "R")
+    {
+      digitalWrite(R_PIN, LOW);
+      digitalWrite(G_PIN,HIGH);
+      digitalWrite(B_PIN,HIGH);    
+      Serial.println("Red ON!");
+     }
+    else if(cmd== "G")
+    {
+      digitalWrite(R_PIN,HIGH);
+      digitalWrite(G_PIN,LOW);
+      digitalWrite(B_PIN,HIGH);
+      Serial.println("Green ON!");
+    }
+    else if(cmd== "B")
+    {
+      digitalWrite(R_PIN,HIGH);
+      digitalWrite(G_PIN,HIGH);
+      digitalWrite(B_PIN,LOW);
+      Serial.println("Blue ON!");
+    }
+    else if(cmd== "OFF")
+    {
+      digitalWrite(R_PIN,HIGH);
+      digitalWrite(G_PIN,HIGH);
+      digitalWrite(B_PIN,HIGH);
+      Serial.println("LED OFF!");
+    }
+  }
+
+}
+```
+5. ros2_ws 위치에서 source install/setup.bash  실행
+6. 위의 코드들을 참고하여 권한 주고, 프로그램 실행하고, 명령어 주면 led 켜고,끄고, 색바꾸기 성공
+
+## 온습도센서로 작업하기?
+1. 아두이노 코드 작성하기(나중에 코드 넣기)
+2. cd ros2_ws/src
+3. ros2 pkg create dht_sensor_bridge --build-type ament_python --dependencies rclpy std_msgs  //온습도를 위한 패키지 생성
+4. sudo apt install python3-serial  // 파이썬이 제대로 있는지 확인
+5. ros2_ws/src/dht_sensor_bridge/dht_sensor_bridge 로 이동
+6. nano dht_node.py 생성하고 작성하기
+```py
+
+```
+7. setup.py파일 수정하기
+8. ros2_ws 위치에서 colcon build 하기
+9. source install/setup.bash 
+10. 실행하기
+
+
+## VSCode와 연결하기
+1. 왼쪽 하단의 꺽쇠 표시(원격 창 열기) 클릭
+2. 위쪽 창에 목록이 나오면 "호스트에 연결" 클릭
+3. "새 SSH 호스트 추가" 클릭
+4. 연결하고자 하는 사용자 이름@ip주소 입력   예) rpi@192.168.0.3
+5. C:\Users\User\.ssh\config 클릭
+6. 주소와 연결하기
+7. 연결하면 새로운 vs코드창이 뜨는데, 거기서 원격컴퓨터의 운영체제 환경을 선택. 지금은 리눅스 우분투이므로 리눅스를 선택
+  - 연결이 안된다고 한다면 예전의 ssh가 남아있어서 그렇거나, 원격컴퓨터의 ssh가 열려있지 않아서 그렇다.
+  - 예전의 ssh 삭제방법은 "로컬디스크(C)->사용자->User->.ssh" 폴더 내에서 known_hosts와 known_hosts.old 파일을 삭제한다.
+  - ssh 연적이 없다면 반드시 한번 열어줘야한다.
+  - 그러고 다시 연결하면 분명 연결이 될 것이다.
+8. 비밀번호를 입력하고 접속한다.
+
+
+
+## 과제하기
+- 초음파 센서, 온습도센서, 조도 센서를 사용하여 토픽으로 정보를 주고받고 그 값에 따라 모터가 돌아가서 문이 열리고 led가 켜지는 자동문 만들기
+
